@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
+    <div class="form-group">
+        <input class="form-control" placeholder="Search..." />
+    </div>
+@{
+    var bindings = Commands.GenerateList(Model);
+
+    <div class="row">
+
+        @foreach (string key in bindings.Keys)
+        {
+            <article class="col-12 col-sm-6 col-md-4 key-group">
+                <h3 class="shortcut-key" data-toggle="collapse" data-target="#@key.Replace(' ', '-')">@key</h3>
+                <dl id="@key.Replace(' ', '-')" class="collapse shortcuts">
+                    @foreach (Binding binding in bindings[key])
+                    {
+                        <dt>@binding.DisplayName</dt>
+                        foreach (string shortcut in binding.Shortcuts)
+                        {
+                            <dd class="shortcut">@shortcut</dd>
+                        }
+                    }
+                </dl>
+            </article>
+        }
+    </div>
+}
